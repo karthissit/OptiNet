@@ -169,10 +169,98 @@ By the end of Phase 5:
 
 ---
 
+## Module Structure
+
+```
+OptiNet (Multi-Module Gradle Project)
+│
+├── optinet-core/
+│   └── Domain models, sample simulators, pure Java (no Spring)
+│   
+├── network-element-simulator/
+│   └── Simulates optical NEs with NETCONF over SSH
+│       • Supports multiple topologies (P2P, Long-haul, Mesh, Ring)
+│       • REST management API
+│       • Realistic port connections with signal degradation
+│   
+├── optinet-api/
+│   └── Main REST API for telemetry ingestion & queries
+│       • Planned for Phase 1+ implementation
+│
+└── docs/
+    ├── phase-1-design.md
+    ├── network-element-simulator-guide.md
+    ├── getting-started.md
+    ├── DOMAIN_MODEL.md
+    └── more...
+```
+
+---
+
 ## Documentation Index
 
-- [Phase 1 Design: Foundation & Telemetry Ingestion](docs/phase-1-design.md)
-- (Phase 2, 3, 4, 5 to follow as you progress)
+- **[Getting Started](docs/getting-started.md)** — Domain model overview and first steps
+- **[Phase 1 Design](docs/phase-1-design.md)** — Monolithic API architecture and implementation roadmap
+- **[Domain Model Glossary](docs/DOMAIN_MODEL.md)** — Optical networking concepts and terminology
+- **[Network Element Simulator Guide](docs/network-element-simulator-guide.md)** — Detailed guide to NETCONF simulator
+
+---
+
+## Quick Start
+
+### 1. Run the Network Element Simulator
+
+```bash
+cd /workspaces/OptiNet
+gradle bootRun -p network-element-simulator
+```
+
+Output:
+```
+Simulator running on http://localhost:8080
+NETCONF server listening on port 8830
+```
+
+### 2. Query the Network Topology
+
+```bash
+curl http://localhost:8080/api/simulator/topology | jq
+```
+
+### 3. Connect to a Simulated Network Element (NETCONF)
+
+```bash
+ssh -p 8830 admin@localhost
+# Password: admin
+
+# Send NETCONF RPC:
+# <rpc message-id="1"><get/></rpc>
+# ]]>]]>
+```
+
+---
+
+## Architecture at a Glance
+
+### Phase 1: Monolith + Simulator
+
+```
+[Simulated NEs]
+    ↓ NETCONF (SSH)
+[OptiNet API] ← (Phase 1 - to be implemented)
+    ↓ SQL
+[PostgreSQL]
+```
+
+### Phase 2+: Event-Driven
+
+```
+[Simulated NEs]
+    ↓
+[OptiNet API] → [Apache Kafka] → [Processing]
+    ↓                               ↓
+[PostgreSQL]                  [Apache Pinot]
+```
 
 ---
 
