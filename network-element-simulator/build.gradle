@@ -1,0 +1,65 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.2.1'
+    id 'io.spring.dependency-management' version '1.1.4'
+}
+
+group = 'com.optinet'
+version = '1.0.0-SNAPSHOT'
+
+java {
+    sourceCompatibility = '17'
+    targetCompatibility = '17'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencyManagement {
+    imports {
+        mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
+    }
+}
+
+dependencies {
+    // Core module
+    implementation project(':optinet-core')
+    
+    // Spring Boot
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    
+    // SSH/NETCONF
+    implementation 'com.sshtools:sshapi:2.2.0'
+    implementation 'com.sshtools:sshapi-openssh:2.2.0'
+    implementation 'com.sshtools:sshtools-common:1.0.2'
+    
+    // XML/NETCONF
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'
+    implementation 'com.sun.xml.bind:jaxb-core:4.0.2'
+    implementation 'com.sun.xml.bind:jaxb-impl:4.0.2'
+    implementation 'org.apache.commons:commons-lang3:3.14.0'
+    
+    // YAML for topology configuration
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.16.1'
+    
+    // Logging
+    implementation 'org.springframework.boot:spring-boot-starter-logging'
+    
+    // Testing
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+bootJar {
+    mainClass = 'com.optinet.simulator.NeSimulatorApplication'
+    archiveFileName = 'network-element-simulator.jar'
+}
+
+jar {
+    enabled = false
+}

@@ -1,0 +1,5 @@
+rootProject.name = 'optinet'
+
+include 'optinet-core'
+include 'network-element-simulator'
+include 'optinet-api'

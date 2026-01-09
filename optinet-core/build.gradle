@@ -1,0 +1,27 @@
+plugins {
+    id 'java-library'
+}
+
+group = 'com.optinet'
+version = '1.0.0-SNAPSHOT'
+
+java {
+    sourceCompatibility = '17'
+    targetCompatibility = '17'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // No Spring dependencies for core domain module
+    // This keeps the domain model pure and reusable
+    
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

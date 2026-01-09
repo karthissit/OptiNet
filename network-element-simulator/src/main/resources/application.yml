@@ -1,0 +1,55 @@
+spring:
+  application:
+    name: network-element-simulator
+  boot:
+    admin:
+      client:
+        enabled: false
+
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+# Network Element Simulator configuration
+simulator:
+  netconf:
+    # SSH server for NETCONF (separate from HTTP)
+    ssh-port: 8830
+    ssh-host: 0.0.0.0
+    max-sessions: 10
+    session-timeout-ms: 300000  # 5 minutes
+    
+  # Topology configuration
+  topology:
+    # Options: POINT_TO_POINT, LONG_HAUL, MESH, RING, COMPLEX
+    default-topology: LONG_HAUL
+    
+  # Simulation parameters
+  simulation:
+    # Simulate KPI metric generation
+    kpi-generation-enabled: true
+    # Interval (ms) between KPI measurements
+    kpi-interval-ms: 5000
+    # Add random noise to metrics
+    add-noise: true
+    noise-level: 0.5
+
+# Logging
+logging:
+  level:
+    com.optinet.simulator: DEBUG
+    org.springframework.boot: INFO
+    org.springframework.web: INFO
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+
+# Actuator for monitoring
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,metrics,info
+  endpoint:
+    health:
+      show-details: always
