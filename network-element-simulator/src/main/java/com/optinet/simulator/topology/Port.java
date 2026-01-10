@@ -1,10 +1,7 @@
 package com.optinet.simulator.topology;
 
-import java.util.*;
-
 /**
  * Represents a physical or logical port on a network element.
- * 
  * Ports enable network elements to connect and exchange data.
  * Types:
  * - Optical: Wavelength-specific (e.g., 1550nm on DWDM)

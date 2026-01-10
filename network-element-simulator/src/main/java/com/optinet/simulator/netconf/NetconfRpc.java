@@ -1,14 +1,11 @@
 package com.optinet.simulator.netconf;
 
-import java.io.*;
 import java.util.*;
 
 /**
  * Represents a NETCONF RPC message.
- * 
  * NETCONF (Network Configuration Protocol) uses XML-based RPC for communication.
  * This class wraps incoming RPC requests and manages responses.
- * 
  * Example RPC:
  * <rpc message-id="1" xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
  *   <get>

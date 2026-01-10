@@ -9,7 +9,6 @@ version = '1.0.0-SNAPSHOT'
 
 subprojects {
     apply plugin: 'java'
-    apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
 
     java {
@@ -44,9 +43,17 @@ subprojects {
     }
 }
 
-// Root project tasks
-task clean {
-    doFirst {
-        println "Cleaning all modules..."
-    }
+repositories {
+    mavenCentral()
 }
+
+bootJar {
+    enabled = false
+}
+
+// Root project tasks
+// task clean {
+//     doFirst {
+//         println "Cleaning all modules..."
+//     }
+// }

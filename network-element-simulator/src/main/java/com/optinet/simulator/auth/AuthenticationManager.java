@@ -1,16 +1,13 @@
 package com.optinet.simulator.auth;
 
-import java.security.MessageDigest;
 import java.util.*;
 
 /**
  * Simple authentication manager for the network element simulator.
- * 
  * In production, this would integrate with:
  * - RADIUS/TACACS+ for centralized authentication
  * - Local user database with encrypted passwords
  * - Certificate-based authentication (SSH keys)
- * 
  * For simulation, we use simple username/password pairs.
  */
 public class AuthenticationManager {
